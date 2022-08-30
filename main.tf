@@ -77,7 +77,7 @@ resource "aws_eip" "jenkins_web_eip" {
 
 resource "aws_lb_target_group" "jenkins_test" {
   name        = "tf-jenkins-test-lb-tg"
-  port        = 80
+  port        = 8080
   target_type = "instance"
   protocol    = "HTTP"
   vpc_id      = aws_vpc.jenkins_vpc.id
@@ -86,13 +86,13 @@ resource "aws_lb_target_group" "jenkins_test" {
 resource "aws_lb_target_group_attachment" "jattachmentgrp1" {
   target_group_arn = aws_lb_target_group.jenkins_test.arn
   target_id        = aws_instance.jenkins_web[0].id
-  port             = 80
+  port             = 8080
 }
 
 resource "aws_lb_target_group_attachment" "jattachmentgrp2" {
   target_group_arn = aws_lb_target_group.jenkins_test.arn
   target_id        = aws_instance.jenkins_web[1].id
-  port             = 80
+  port             = 8080
 }
 
 resource "aws_lb" "jenkins_alb" {
@@ -110,7 +110,7 @@ resource "aws_lb" "jenkins_alb" {
 
 resource "aws_lb_listener" "lb_jenkins_listener_http" {
   load_balancer_arn = aws_lb.jenkins_alb.id
-  port              = "80"
+  port              = "8080"
   protocol          = "HTTP"
 
   default_action {
