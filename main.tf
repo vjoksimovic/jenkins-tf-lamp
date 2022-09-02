@@ -48,7 +48,7 @@ resource "aws_db_instance" "jenkins_database" {
 
 resource "aws_key_pair" "tutorial_kp" {
   key_name   = "tutorial_kp"
-  public_key = file("~/.ssh/tutorial_kp.pub")
+  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDjcrRBmFo6yYoAba+LtMHXVyLZfJwQ7hpkpjydQZFXBdtQ6iRu9wK0fugKvHtwq3enRyyXfZyjqYfxqyiVU6+OeU9EhMt7OvPMwokXFVTfNnxOHSPYFt/TlHd96iCLQDF9Kb0+5gR8lcfHf09zSk4eGJ7U9a7f2Uh7LB7KhkSc5a5zA7uPPS29UZCJXBxzkAtPWqi98Ty6krVwQsKgWBDIkHMnzX0t8oYZilfIw4cFsCviIlrcU+RCdWCA2BX5yU9xcYYq/V6//ysRxhgguuEz/e7ACCEE6LwZe9MVcqOoYuVfVpCnZaHWbBlrYlaRSx+adA0oLKUwlrsWalNy164+HmRy/UbMmKeGLyRS27yLWNXzWS3e9FcRrEbG+jDgGxdil/OF43h75VYTBRUv93gXTtMFW9B0CiJSRisP9ZY3XivIzBuBWScbtgT30bfNs7TpbqR4g70L7zu30bPbgzfMU1X3VjJzOSBI4zMQN0Qg0oHk/LXqtUbYM4ilKevQjSjkJCFPCifEJJzRpcHz/8/ZQXYWo0vh8I1ybLqBzJCTx1a6n31+z0gfAey0ipfNqIUzsa/S6LtEe8HQDjl5++8hasGyozrMYA27dkaxRNLdivLpGU1Hhf9p3B99e3qqMcBS4Yh5fmFWvPjVhsl+5xflidPlzBEWDee70WmJrJUBvQ== vjoksimovic@C9591"
 }
 
 resource "aws_instance" "jenkins_web" {
