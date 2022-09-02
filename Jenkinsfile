@@ -11,16 +11,26 @@ pipeline {
 
         stage('Pull Terraform infrastructure') {
                     steps {
-                        script {
                             git 'https://github.com/vjoksimovic/jenkins-tf-lamp.git'
-                        }
                     }
                 }
+                
+        stage('Terraform format check') {
+            steps{
+                sh 'terraform fmt'
+            }
+        }
+        
+        stage('Terraform Init') {
+            steps{
+                sh 'terraform init'
+            }
+        }
 
         stage('Apply Terraform infrastructure') {
                     steps {
                         script {
-                            sh 'terraform apply -var-file="secrets.tfvars"'
+                            sh 'terraform apply -auto-approve -var-file="secrets.tfvars"'
                         }
                     }
                 }
