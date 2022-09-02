@@ -27,7 +27,7 @@ pipeline {
         stage('Apply Terraform infrastructure') {
                     steps {
                         script {
-                            sh 'terraform apply -auto-approve -var "access-key=$access" -var-file="secrets.tfvars"'
+                            sh 'terraform apply -auto-approve -var "access-key=$aws-credentials" -var-file="secrets.tfvars"'
                         }
                     }
                 }
