@@ -3,8 +3,8 @@ variable "aws_region" {
   default = "eu-central-1"
 }
 
-variable "access_key" {
-  default = "access"
+variable "access" {
+  default = "aws-credentials"
 }
 
 variable "vpc_cidr_block" {
