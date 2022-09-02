@@ -7,7 +7,8 @@ pipeline {
         skipStagesAfterUnstable()
     }
     environment {
-        access=credentials('aws-credentials')
+        ACCESS_KEY = credentials('AWS_ACCESS_KEY_ID')
+        SECRET_KEY = credentials('AWS_SECRET_ACCESS_KEY')
     }
 
     stages {
@@ -27,7 +28,7 @@ pipeline {
         stage('Apply Terraform infrastructure') {
                     steps {
                         script {
-                            sh 'terraform apply -auto-approve -var "access-key=$aws-credentials" -var-file="secrets.tfvars"'
+                            sh 'terraform apply -auto-approve -var "ACCESS_KEY=$AWS_ACCESS_KEY_ID" -var "SECRET_KEY=$AWS_SECRET_ACCESS_KEY" -var-file="secrets.tfvars"'
                         }
                     }
                 }
