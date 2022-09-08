@@ -44,7 +44,7 @@ resource "aws_db_instance" "jenkins_database" {
 
 resource "aws_key_pair" "tutorial_kp" {
   key_name   = "tutorial_kp"
-  public_key = "~/.ssh/tutorial_kp"
+  public_key = "~/.ssh/tutorial_kp.pub"
 }
 
 resource "aws_instance" "jenkins_web" {
