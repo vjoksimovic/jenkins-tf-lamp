@@ -1,6 +1,6 @@
 provider "aws" {
-  profile                  = "veljo"
-  region                   = var.aws_region
-  shared_credentials_files = ["/root/.aws/credentials"]
-  shared_config_files      = ["/root/.aws/config"]
+  region     = var.aws_region
+  assume_role ={
+    role_arn = "arn:aws:iam::372462118821:role/jenkins-tf-lamp-role"
+  }
 }
