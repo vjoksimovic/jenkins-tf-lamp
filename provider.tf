@@ -1,5 +1,6 @@
 provider "aws" {
-  profile                  = "veljo"
+  profile                  = ""
   region                   = var.aws_region
-  shared_credentials_files = ["/root/.aws/credentials"]
+  access_key               = var.access_key
+  secret_key               = var.secret_key
 }
