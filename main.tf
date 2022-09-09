@@ -42,9 +42,18 @@ resource "aws_db_instance" "jenkins_database" {
   skip_final_snapshot    = var.settings.database.skip_final_snapshot
 }
 
-resource "aws_key_pair" "tutorial_kp" {
-  key_name   = "tutorial_kp"
-  public_key = "/root/.ssh/tutorial_kp"
+resource "tls_private_key" "tls_slave_kp" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
+
+resource "aws_key_pair" "slave_kp" {
+  key_name   = "slave_kp"       # Create "myKey" to AWS!!
+  public_key = tls_private_key.tls_slave_kp.public_key_openssh
+
+  provisioner "local-exec" {
+    command = "echo '${tls_private_key.tls_slave_kp.private_key_pem}' > ~/.ssh/slave_kp.pem"
+  }
 }
 
 resource "aws_instance" "jenkins_web" {
