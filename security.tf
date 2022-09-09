@@ -12,6 +12,14 @@ resource "aws_security_group" "jenkins_web_sg" {
   }
 
   ingress {
+    description = "Allow all traffic through HTTP"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
     description = "Allow SSH from my computer"
     from_port   = "22"
     to_port     = "22"
