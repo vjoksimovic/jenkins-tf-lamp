@@ -77,8 +77,10 @@ variable "db_password" {
   sensitive   = true
 }
 
-variable "key_name" {
+variable "ssh_key_pair" {
+  type        = string
   default     = "tutorial_kp"
+  description = "Name of SSH key that will be deployed on EC2 instances. The key should be present in AWS"
 }
 
 

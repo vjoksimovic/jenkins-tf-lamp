@@ -42,21 +42,13 @@ resource "aws_db_instance" "jenkins_database" {
   skip_final_snapshot    = var.settings.database.skip_final_snapshot
 }
 
-resource "tls_private_key" "example" {
-  algorithm = "RSA"
-  rsa_bits  = 4096
-}
-resource "aws_key_pair" "generated_key" {
-  key_name   = var.key_name
-  public_key = tls_private_key.example.public_key_openssh
-}
 
 resource "aws_instance" "jenkins_web" {
   count                  = var.settings.web_app.count
   ami                    = data.aws_ami.ubuntu.id
   instance_type          = var.settings.web_app.instance_type
   subnet_id              = aws_subnet.jenkins_public_subnet[count.index].id
-  key_name               = aws_key_pair.tutorial_kp.key_name
+  key_name               = var.ssh_key_pair
   vpc_security_group_ids = [aws_security_group.jenkins_web_sg.id]
   iam_instance_profile   = aws_iam_instance_profile.ec2_profile.name
 
