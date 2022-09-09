@@ -42,18 +42,9 @@ resource "aws_db_instance" "jenkins_database" {
   skip_final_snapshot    = var.settings.database.skip_final_snapshot
 }
 
-resource "tls_private_key" "tls_slave_kp" {
-  algorithm = "RSA"
-  rsa_bits  = 4096
-}
-
-resource "aws_key_pair" "slave_kp" {
-  key_name   = "slave_kp"       # Create "myKey" to AWS!!
-  public_key = tls_private_key.tls_slave_kp.public_key_openssh
-
-  provisioner "local-exec" {
-    command = "echo '${tls_private_key.tls_slave_kp.private_key_pem}' > ~/.ssh/slave_kp.pem"
-  }
+resource "aws_key_pair" "tutorial_kp" {
+  key_name   = "tutorial_kp"
+  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDjcrRBmFo6yYoAba+LtMHXVyLZfJwQ7hpkpjydQZFXBdtQ6iRu9wK0fugKvHtwq3enRyyXfZyjqYfxqyiVU6+OeU9EhMt7OvPMwokXFVTfNnxOHSPYFt/TlHd96iCLQDF9Kb0+5gR8lcfHf09zSk4eGJ7U9a7f2Uh7LB7KhkSc5a5zA7uPPS29UZCJXBxzkAtPWqi98Ty6krVwQsKgWBDIkHMnzX0t8oYZilfIw4cFsCviIlrcU+RCdWCA2BX5yU9xcYYq/V6//ysRxhgguuEz/e7ACCEE6LwZe9MVcqOoYuVfVpCnZaHWbBlrYlaRSx+adA0oLKUwlrsWalNy164+HmRy/UbMmKeGLyRS27yLWNXzWS3e9FcRrEbG+jDgGxdil/OF43h75VYTBRUv93gXTtMFW9B0CiJSRisP9ZY3XivIzBuBWScbtgT30bfNs7TpbqR4g70L7zu30bPbgzfMU1X3VjJzOSBI4zMQN0Qg0oHk/LXqtUbYM4ilKevQjSjkJCFPCifEJJzRpcHz/8/ZQXYWo0vh8I1ybLqBzJCTx1a6n31+z0gfAey0ipfNqIUzsa/S6LtEe8HQDjl5++8hasGyozrMYA27dkaxRNLdivLpGU1Hhf9p3B99e3qqMcBS4Yh5fmFWvPjVhsl+5xflidPlzBEWDee70WmJrJUBvQ== vjoksimovic@C9591"
 }
 
 resource "aws_instance" "jenkins_web" {
@@ -61,7 +52,7 @@ resource "aws_instance" "jenkins_web" {
   ami                    = data.aws_ami.ubuntu.id
   instance_type          = var.settings.web_app.instance_type
   subnet_id              = aws_subnet.jenkins_public_subnet[count.index].id
-  key_name               = aws_key_pair.slave_kp.key_name
+  key_name               = aws_key_pair.tutorial_kp.key_name
   vpc_security_group_ids = [aws_security_group.jenkins_web_sg.id]
   iam_instance_profile   = aws_iam_instance_profile.ec2_profile.name
 
